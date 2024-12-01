@@ -4,7 +4,12 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST']) 
 def start():
-    if request.method == 'GET':
+    if request.method == 'POST':
+        #print(str(POST['quiz']))
+        answer = request.form['quiz']
+        return answer
+
+    else:
         page='''
             <!DOCTYPE html>
             <html>
@@ -13,19 +18,15 @@ def start():
             <body>
                 <form action="" method="post" name="form">
                     <label for="question">Question:</label><br>
-                    <input type="radio" naem="quiz" value="answer1"><br>
-                    <input type="radio" name="quiz" value="answer2"><br>
-                    <input type="radio" name="quiz" value="answer3"><br>
-                    <input type="radio" name="quiz" value="answer4"><br>
+                    <input type="radio" name="quiz" value="answer1" id="answer1">attempt1</input><br>
+                    <input type="radio" name="quiz" value="answer2" id="answer2">attempt2</input><br>
+                    <input type="radio" name="quiz" value="answer3" id="answer3">attempt3</input><br>
+                    <input type="radio" name="quiz" value="answer4" id="answer4">attempt4</input><br>
                     <input type="submit" name="submit" id="submit"/>
                 </form>
             <body></html>
         '''
         return page
-    else:
-        #print(str(POST['quiz']))
-        answer = request.form['quiz']
-        print(answer)
 
 
 
