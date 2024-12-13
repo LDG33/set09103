@@ -1,52 +1,71 @@
-from flask import Flask, redirect, url_for, session, render_template, request
+from flask import Flask, g, request, redirect, render_template, session, url_for
 import sqlite3
+
 app = Flask(__name__)
+db_location = 'var/QuizAppDatabase.db'
 
-@app.route('/', methods=['GET', 'POST']) 
-def login():       
+def get_db():
+    db = getattr(g, 'db', None)
+    if db is None:
+        db = sqlite3.connect(db_location)
+        g.db = db
+    return db
+
+@app.teardown_appcontext
+def close_db_connection(exception):
+    db = getattr(g, 'db', None)
+    if db is not None:
+        db.close()
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def root():
     if request.method == 'GET':
-        page='''
+        register='''
             <!DOCTYPE html>
-            <html>
-            <head>
-            </head>
-            <body>
-                <form action="" method="post" name="login_form">
-
-                    <label for="question">Please provide your login:</label><br>
-                    <input type="text" name="Login" id="login"/><br>
-
-                    <label for="question">Please provide your name:</label><br>
-                    <input type="text" name="Name" id="name"/><br>
-
-                    <label for="question">Please provide your email:</label><br>
-                    <input type="email" name="Email" id="email"/><br>
-
-                    <label for="question">Please provide your date of birth:</label><br>
-                    <input type="date" name="DOB" id="dob"/><br>
-
-                    <label for="question">Please provide your password:</label><br>
-                    <input type="password" name="Password" id="password"/><br>
-
-                    <label for="question">Please repeat your password:</label><br>
-                    <input type="password" name="Password2" id="password2"/><br>
-
+            <html><body>
+                <form action="" method="POST" name="registrationForm">
+                    <input type="text" name="usernameReg" id="usernameReg"/>
+                    <input type="password" name="passwordReg" id="passwordReg"/>
+                    <input type="password" name="passwordReg2" id="passwordReg2"/>
                     <input type="submit" name="submit" id="submit"/>
                 </form>
-            <body></html>
+            </body></html>
         '''
-        return page
-
+        return register
     else:
-        login = request.form['Login']
-        password = request.form['Password']
-        return login+" "+password
 
+        db = get_db()
+        #db.cursor().execute('insert into albums values ("American Beauty", "Grateful Dead", "CD")')
+        #db.commit()
+        cursor=db.cursor()
 
+        userReg = request.form['usernameReg']
+        pw1 = request.form['passwordReg']
+        pw2 = request.form['passwordReg']
+
+        if(pw1==pw2):
+            db.cursor().execute('INSERT INTO Users (Username, Password) VALUES (?, ?)',(userReg,pw2))
+            db.commit()
+
+        return "happy clam"
+        #TEST IF ENTRY DOES NOT EXISTS IN DATABASE
+
+        sql = "SELECT * FROM Users WHERE Username = ? AND Password = ?"
+        cursor.execute(sql, (user,pw))
+
+        rows = cursor.fetchall()
+        for row in rows:
+            usernameFromDB = row[1]
+            passwordFromDB = row[2]
+            return usernameFromDB, passwordFromDB 
 
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host="0.0.0.0", debug=True)
+
+
+
 
 

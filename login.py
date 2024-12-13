@@ -1,95 +1,77 @@
-from flask import Flask, redirect, url_for, session, render_template, request, g
+from flask import Flask, g, request, redirect, render_template, session, url_for
 import sqlite3
+
 app = Flask(__name__)
-
-
-DATABASE = 'var/quizapp.db'
+db_location = 'var/QuizAppDatabase.db'
 
 def get_db():
-    db = getattr(g, '_database', None)
+    db = getattr(g, 'db', None)
     if db is None:
-        db = g._database = sqlite3.connect(DATABASE)
-        #db.row_factory = sqlite3.Row
+        db = sqlite3.connect(db_location)
+        g.db = db
     return db
 
 @app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
+def close_db_connection(exception):
+    db = getattr(g, 'db', None)
     if db is not None:
         db.close()
 
 
-@app.route('/', methods=['GET', 'POST']) 
-def login():       
+@app.route("/login", methods=['GET', 'POST'])
+def root():
     if request.method == 'GET':
-        page='''
+        login='''
             <!DOCTYPE html>
-            <html>
-            <head>
-            </head>
-            <body>
-                <form action="" method="post" name="login_form">
-                    <label for="question">Please provide your login:</label><br>
-                    <input type="text" name="Login" id="login"/><br>
-                    <label for="question">Please provide your password:</label><br>
-                    <input type="password" name="Password" id="password"/><br>
+            <html><body>
+                <form action="" method="POST" name="loginForm">
+                    <input type="text" name="username" id="username"/>
+                    <input type="password" name="password" id="password"/>
                     <input type="submit" name="submit" id="submit"/>
                 </form>
-            <body></html>
+            </body></html>
         '''
-        return page
-
+        return login
     else:
-        login = request.form['Login']
-        password = request.form['Password']
-        
-        page = []
-        total = []
-        
+
         db = get_db()
-        cursor = db.cursor()
-        #for row in cursor.execute("SELECT * FROM Users WHERE Login = 'Lu1'"):
-        #cursor.execute("SELECT Password FROM Users WHERE Login=='"+login+"'")
-        sql = ("SELECT * FROM Users WHERE Login="+login)
-        cursor.execute(sql)
-                       # WHERE Login = ?", (login) ///WHERE Login = 'Lu1'
-        users = cursor.fetchall()
-            #page.append(str(row))
-        for user in users:
-            total += user
-        #puzniej condition zeby sprawdzic czy total nie jest puste
-        return total[0]
+        #db.cursor().execute('insert into albums values ("American Beauty", "Grateful Dead", "CD")')
+        #db.commit()
+        cursor=db.cursor()
+
+        user = request.form['username']
+        pw = request.form['password']
+
+        sql = "SELECT * FROM Users WHERE Username = ? AND Password = ?"
+        cursor.execute(sql, (user,pw))
+
+        rows = cursor.fetchall()
+        for row in rows:
+            usernameFromDB = row[1]
+            passwordFromDB = row[2]
+            return usernameFromDB, passwordFromDB 
+
+
+
+           
+#return redirect(url_for('.login'))
+
+"""
+@app.route("/", methods=['GET', 'POST'])
+def root():
+    if request.method == 'POST':
+        user = request.form['email']
+        pw = request.form['password']
         
-        #return page
-    
-        cursor.execute("SELECT Password FROM Users")
-                       # WHERE Login = ?", (login)
-        password = cursor.fetchall()
-        return str(*users[2])+"   "+str(*password[2])
-        
-    
-        #return login+" "+password
-
-        #Used to work - good for printing whole DB <-----------------------------------------
-        #for row in db.cursor().execute("SELECT * FROM Users WHERE Name ='Lukasz' "):
-            #return row
-        #--------------------->
-            
-            #page.append(str(row))
-        
-        #for row in cursor.execute(sql):
-            #print row
-
-        #return login
-        #return row[0]
-        #return page
-        
-
-
-
+        if check_auth(request.form['email'], request.form['password']):
+            session['logged_in'] = True
+            return redirect(url_for('.secret'))
+    return render_template('login.html')
+"""
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host="0.0.0.0", debug=True)
+
 
 
