@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, session, render_template, request
 import sqlite3
 app = Flask(__name__)
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 session['total']= 0
 

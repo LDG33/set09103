@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        canvas{
+            border: 1px solid black;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>You have finished the quiz!</h1>
+    <p>
+        Your score was {{score}} answers correct
+    </p>
+
+    <a href="/">Back to the Start</a><br>
+    <a href="/">Go to Statistics</a>
+    <br><br>
+    <canvas>
+
+    </canvas>
+    <!--<script type="text/javascript" src="canvas.js">-->
+    <script type="text/javascript">
+        var canvas = document.querySelector('canvas');
+
+        //canvas.width = window.innerWidth;
+        //canvas.height = window.innerHeight;
+
+        canvas.width = 400;
+        canvas.height = 200;
+
+        var answers = "{{score}}";
+
+        var c = canvas.getContext('2d');
+        c.fillRect(100,50,50,50*answers);
+        c.fillRect(250,50,50,50);
+
+    </script>
+
+</body>
+</html>

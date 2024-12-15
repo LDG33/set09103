@@ -36,19 +36,23 @@ def root():
     else:
 
         db = get_db()
-        #db.cursor().execute('insert into albums values ("American Beauty", "Grateful Dead", "CD")')
-        #db.commit()
         cursor=db.cursor()
 
         userReg = request.form['usernameReg']
         pw1 = request.form['passwordReg']
-        pw2 = request.form['passwordReg']
+        pw2 = request.form['passwordReg2']
+
+
+
 
         if(pw1==pw2):
             db.cursor().execute('INSERT INTO Users (Username, Password) VALUES (?, ?)',(userReg,pw2))
             db.commit()
+        else:
+            return "passwords do not match"
 
         return "happy clam"
+        
         #TEST IF ENTRY DOES NOT EXISTS IN DATABASE
 
         sql = "SELECT * FROM Users WHERE Username = ? AND Password = ?"
