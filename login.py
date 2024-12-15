@@ -1,7 +1,11 @@
 from flask import Flask, g, request, redirect, render_template, session, url_for
 import sqlite3
+from register import register
 
 app = Flask(__name__)
+
+app.secret_key = 'qwertyuiop'
+
 db_location = 'var/QuizAppDatabase.db'
 
 def get_db():
@@ -19,9 +23,13 @@ def close_db_connection(exception):
 
 
 @app.route("/login", methods=['GET', 'POST'])
-def root():
+def login():
+
+    usernameFromDB=""
+    passwordFromDB=""
+
     if request.method == 'GET':
-        login='''
+        loginVar='''
             <!DOCTYPE html>
             <html><body>
                 <form action="" method="POST" name="loginForm">
@@ -31,7 +39,7 @@ def root():
                 </form>
             </body></html>
         '''
-        return login
+        return loginVar
     else:
 
         db = get_db()
@@ -49,8 +57,15 @@ def root():
         for row in rows:
             usernameFromDB = row[1]
             passwordFromDB = row[2]
-            return usernameFromDB, passwordFromDB 
 
+            #if (usernameFromDB != None):
+                #return redirect(url_for('.register'))
+        return register()          
+    
+    
+    #return usernameFromDB + passwordFromDB 
+    #return redirect(url_for('.secret'))
+    #return render_template('login.html')
 
 
            

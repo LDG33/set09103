@@ -2,6 +2,9 @@ from flask import Flask, g, request, redirect, render_template, session, url_for
 import sqlite3
 
 app = Flask(__name__)
+
+app.secret_key = 'qwertyuiop'
+
 db_location = 'var/QuizAppDatabase.db'
 
 def get_db():
@@ -19,9 +22,9 @@ def close_db_connection(exception):
 
 
 @app.route("/register", methods=['GET', 'POST'])
-def root():
+def register():
     if request.method == 'GET':
-        register='''
+        registerVar='''
             <!DOCTYPE html>
             <html><body>
                 <form action="" method="POST" name="registrationForm">
@@ -32,7 +35,7 @@ def root():
                 </form>
             </body></html>
         '''
-        return register
+        return registerVar
     else:
 
         db = get_db()
