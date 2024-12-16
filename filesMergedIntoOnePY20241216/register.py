@@ -24,18 +24,7 @@ def close_db_connection(exception):
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
-        registerVar='''
-            <!DOCTYPE html>
-            <html><body>
-                <form action="" method="POST" name="registrationForm">
-                    <input type="text" name="usernameReg" id="usernameReg"/>
-                    <input type="password" name="passwordReg" id="passwordReg"/>
-                    <input type="password" name="passwordReg2" id="passwordReg2"/>
-                    <input type="submit" name="submit" id="submit"/>
-                </form>
-            </body></html>
-        '''
-        return registerVar
+        return render_template('register.html')
     else:
 
         db = get_db()
