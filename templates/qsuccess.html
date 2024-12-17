@@ -2,6 +2,10 @@
 <html>
 <head>
 
+
+    <link href="{{ url_for('static', filename='bst/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" />
+
     <style>
         canvas{
             border: 5px solid rgb(61, 61, 61);
@@ -11,6 +15,9 @@
 
 </head>
 <body>
+    
+    {% include 'navigation.html' %}
+
     <h1>You have finished the quiz!</h1>
     <p>
         Your score was {{score}} answers correct
@@ -150,6 +157,8 @@
     c.fillText("Correct",100,0);
     */
 </script>
+
+<script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 
 </body>
 </html>

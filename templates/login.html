@@ -1,5 +1,15 @@
 <!DOCTYPE html>
-<html><body>
+<html>
+    <head>
+        
+        <link href="{{ url_for('static', filename='bst/bootstrap.min.css')}}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" />
+        
+    </head>    
+<body>
+
+    {% include 'navigation.html' %}
+
     <form action="" method="POST" name="loginForm">
         <input type="text" name="username" id="username"/>
         <input type="password" name="password" id="password"/>
@@ -9,4 +19,7 @@
     <!-- "IF you have not register yet"
      Here register link must be put -->
     <p><a href="/register">If you don not have an account Please Register HERE!</a></p>
+
+
+    <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 </body></html>

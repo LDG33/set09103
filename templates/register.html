@@ -1,5 +1,13 @@
 <!DOCTYPE html>
-<html><body>
+<html>
+    <head>
+        <link href="{{ url_for('static', filename='bst/bootstrap.min.css')}}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" />
+    </head>    
+<body>
+
+    {% include 'navigation.html' %}
+
     <form action="" method="POST" name="registrationForm">
         <input type="text" name="usernameReg" id="usernameReg"/>
         <input type="password" name="passwordReg" id="passwordReg"/>
@@ -9,4 +17,5 @@
     <p>{{messageReg}}</p>
     <p><a href="/">Go Back To Start</a></p>
 
+    <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 </body></html>

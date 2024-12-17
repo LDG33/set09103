@@ -6,6 +6,10 @@ app = Flask(__name__)
 app.secret_key = 'qwertyuiop123'
 db_location = 'var/QuizAppDatabase.db'
 
+#@app.route("/")
+#def nav():
+        #return render_template('inheritence.html')
+
 @app.route("/")
 def intro():
         return render_template('index.html')

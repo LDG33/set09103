@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
+    <link href="{{ url_for('static', filename='bst/bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" />
+
+
+
 </head>
 <body>
+
+    {% include 'navigation.html' %}
+
     <h1>Welcome to QuizApp</h1>
     <p>To start playing quizzes you need to log in first</p>
     <p>Please LogIn here: <a href="/login">Login Page</a></p>
         <!-- "IF you have not register yet"
      Here register link must be put -->
-<body></html>
+
+    
+
+    <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
+</body></html>

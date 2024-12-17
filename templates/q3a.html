@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
-<head></head>
+    <head>
+        <link href="{{ url_for('static', filename='bst/bootstrap.min.css')}}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet" />
+    </head>  
 <body>
+
+    {% include 'navigation.html' %}
+    
     <h1>Correct Answer</h1>
 
     <a href="/qsuccess/">Next Question</a>
+
+    <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>
