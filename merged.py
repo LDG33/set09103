@@ -3,18 +3,16 @@ import sqlite3
 
 app = Flask(__name__)
 
+#session and database details
 app.secret_key = 'qwertyuiop123'
 db_location = 'var/QuizAppDatabase.db'
 
-#@app.route("/")
-#def nav():
-        #return render_template('inheritence.html')
-
+#python root
 @app.route("/")
 def intro():
         return render_template('index.html')
 
-
+#connection to database
 def get_db():
     db = getattr(g, 'db', None)
     if db is None:
@@ -22,13 +20,14 @@ def get_db():
         g.db = db
     return db
 
+#database closure
 @app.teardown_appcontext
 def close_db_connection(exception):
     db = getattr(g, 'db', None)
     if db is not None:
         db.close()
 
-
+#login route
 @app.route("/login", methods=['GET', 'POST'])
 def login():
 
@@ -64,20 +63,7 @@ def login():
             
         else:
             return render_template('login.html', message='Sorry wrong credentials')
-            """
-            if(usernameFromDB == user)and(passwordFromDB == pw):
-                session['logged']=True
-                return "true"
-                #return render_template('/quiz')
-            else:
-                session['logged']=False
-                return "false"
-                #it cannot be like that because it will reset the session
-            """
 
-            #if (usernameFromDB != None):
-                #return redirect(url_for('.register'))
-        #return register() 
 
 #redirect register to login 
 @app.route("/register", methods=['GET', 'POST'])
@@ -92,27 +78,7 @@ def register():
         pw1 = request.form['passwordReg']
         pw2 = request.form['passwordReg2']
 
-        #Testing Validation -> If the entry already exist in DB (to not double register)
-        '''    sqlReg = "SELECT * FROM Users WHERE Username = ?"
-        cursor.execute(sqlReg, (userReg))
 
-        entry = cursor.fetchone()
-        if len(entry)>0:
-            return render_template('register.html', messageReg='Sorry, User already exists!!!')
-        '''
-        #Testing Validation OLD
-        '''
-        #usernameFromDB_Reg = ""
-        sqlReg = "SELECT * FROM Users WHERE Username = ?"
-        cursor.execute(sqlReg, (userReg))
-
-        rowsReg = cursor.fetchall()
-        for rowReg in rowsReg:
-            usernameFromDB_Reg = rowReg[1]
-
-            if len(usernameFromDB_Reg)>0:
-                return render_template('register.html', messageReg='Sorry, User already exists!!!')
-        '''
         if(userReg=="")or(pw1=="")or(pw2==""):
             return render_template('register.html', messageReg='You have left empty fields')
 
@@ -125,23 +91,10 @@ def register():
             return render_template('register.html', messageReg='passwords do not match')
 
         
-        
-        #TEST IF ENTRY DOES NOT EXISTS IN DATABASE
-        #Prohibit the empty submit
-
-        sql = "SELECT * FROM Users WHERE Username = ? AND Password = ?"
-        cursor.execute(sql, (user,pw))
-
-        rows = cursor.fetchall()
-        for row in rows:
-            usernameFromDB = row[1]
-            passwordFromDB = row[2]
-            return usernameFromDB, passwordFromDB 
-        
 #-------------------Second Part: The QuizApp--------------------------------
 
 
-
+#all the subsequent routes to handle each quiz URL 
 @app.route("/quiz")
 def hello():
     session['score']=0
@@ -199,9 +152,9 @@ def q3a():
     session['q3']=1
     return render_template('q3a.html')
 
+#passing the session variables to qsuccess.html canvas
 @app.route("/qsuccess/")
 def qsuccess():
-    #return render_template('qsuccess.html', score, negative,q1=session['q1'],q2=session['q2'],q3=session['q3'])
     return render_template('qsuccess.html', score=session['score'], negative=session['negative'],q1=session['q1'],q2=session['q2'],q3=session['q3'])
 
 #-------------------Second Part: The QuizApp--------------------------------

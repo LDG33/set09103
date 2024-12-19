@@ -8,27 +8,28 @@
     </head>    
 <body>
 
+    <!-- login area -->
+
     {% include 'navigation.html' %}
 
     <section class="containerOne">
 
-    <form action="" method="POST" name="loginForm">
-        <label for="username">Provide Username:</label>
-        <input type="text" name="username" id="username"/>
-        <br><br><label for="password">Provide Password:</label>
-        <input type="password" name="password" id="password"/>
+        <form action="" method="POST" name="loginForm">
+            <label for="username">Provide Username:</label>
+            <input type="text" name="username" id="username"/>
+            <br><br><label for="password">Provide Password:</label>
+            <input type="password" name="password" id="password"/>
+            <br><br>
+            <input type="submit" name="submit" id="submit"/>
+        </form>
         <br><br>
-        <input type="submit" name="submit" id="submit"/>
-    </form>
-    <br><br>
-    <p>{{message}}</p>
-    <!-- "IF you have not register yet"
-     Here register link must be put -->
-    <p><a href="/register">If you don not have an account Please Register HERE!</a></p>
+        <p>{{message}}</p>
 
-    <br><br>
+        <p><a href="/register">If you don not have an account Please Register HERE!</a></p>
 
-    <p><a href="/">Back To Start</a></p>
+        <br><br>
+
+        <p><a href="/">Back To Start</a></p>
 
     </section>
 

@@ -1,3 +1,5 @@
+
+/*stying content area*/
 .containerOne{
     max-width:900px;
     margin-left:auto;
@@ -7,12 +9,13 @@
 
 }
 
+
+/*stying content footer*/
 footer{
     padding-left:150px;
     padding-right:150px;
     background-color: #343a40;
 }
-
 
 
 .footerColor{
