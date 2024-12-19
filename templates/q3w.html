@@ -7,10 +7,15 @@
 <body>
 
     {% include 'navigation.html' %}
-    
+
+    <section class="containerOne">
     <h1>Wrong Answer</h1>
 
     <a href="/qsuccess/">Next Question</a>
+
+    </section>
+
+    {% include 'footer.html' %}
 
     <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 </body>

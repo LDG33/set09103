@@ -18,6 +18,8 @@
     
     {% include 'navigation.html' %}
 
+    <section class="containerOne">
+
     <h1>You have finished the quiz!</h1>
     <p>
         Your score was {{score}} answers correct
@@ -26,11 +28,20 @@
     <a href="/quiz">Back to the Start</a><br>
     
     <br><br>
-    <canvas id="canvas1">
-    </canvas>
-    <br><br>
-    <canvas id="canvas2">
-    </canvas>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <canvas id="canvas1">
+                </canvas>
+            </div>
+            <br><br>
+            <div class="col-sm-6 col-md-6">
+                <canvas id="canvas2">
+                </canvas>
+            </div>
+        </div>
+    </div>
 
     <!--<script type="text/javascript" src="canvas.js">-->
     <script type="text/javascript">
@@ -75,7 +86,7 @@
     //canvas.height = window.innerHeight;
 
     canvas2.width = 350;
-    canvas2.height = 100;
+    canvas2.height = 200;
 
     //var answers = "{{score}}";
     //var negativeAns = "{{negative}}";
@@ -157,6 +168,10 @@
     c.fillText("Correct",100,0);
     */
 </script>
+
+</section>
+
+{% include 'footer.html' %}
 
 <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 

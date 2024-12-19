@@ -10,6 +10,8 @@
 
     {% include 'navigation.html' %}
 
+    <section class="containerOne">
+
     <form action="" method="POST" name="loginForm">
         <input type="text" name="username" id="username"/>
         <input type="password" name="password" id="password"/>
@@ -20,6 +22,13 @@
      Here register link must be put -->
     <p><a href="/register">If you don not have an account Please Register HERE!</a></p>
 
+    <br><br>
+
+    <p><a href="/">Back To Start</a></p>
+
+    </section>
+
+    {% include 'footer.html' %}
 
     <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 </body></html>

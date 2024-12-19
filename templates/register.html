@@ -8,6 +8,9 @@
 
     {% include 'navigation.html' %}
 
+    <section class="containerOne">
+
+
     <form action="" method="POST" name="registrationForm">
         <input type="text" name="usernameReg" id="usernameReg"/>
         <input type="password" name="passwordReg" id="passwordReg"/>
@@ -16,6 +19,10 @@
     </form>
     <p>{{messageReg}}</p>
     <p><a href="/">Go Back To Start</a></p>
+
+    </section>
+
+    {% include 'footer.html' %}
 
     <script src="{{ url_for('static', filename='/bst/bootstrap.bundle.min.js')}}"></script>
 </body></html>
